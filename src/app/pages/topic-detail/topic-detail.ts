@@ -1,0 +1,75 @@
+import { Component, computed, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { getPartBySlug, getTopicBySlug } from '../../data/portfolio.data';
+import { DocContent } from '../../shared/doc-content/doc-content';
+import { SectionHeader } from '../../shared/section-header/section-header';
+
+@Component({
+  selector: 'app-topic-detail',
+  imports: [SectionHeader, DocContent, RouterLink],
+  templateUrl: './topic-detail.html',
+  styleUrl: './topic-detail.scss',
+})
+export class TopicDetailPage {
+  private readonly route = inject(ActivatedRoute);
+
+  private readonly routePartSlug = toSignal(
+    this.route.data.pipe(map((data) => (data['partSlug'] as string) ?? '')),
+    { initialValue: '' },
+  );
+
+  private readonly topicSlug = toSignal(
+    this.route.paramMap.pipe(map((params) => params.get('topicSlug') ?? '')),
+    { initialValue: '' },
+  );
+
+  protected readonly partSlug = computed(
+    () =>
+      this.routePartSlug() ||
+      this.route.snapshot.paramMap.get('partSlug') ||
+      this.inferPartSlugFromUrl(),
+  );
+
+  protected readonly part = computed(() => getPartBySlug(this.partSlug()));
+
+  protected readonly topic = computed(() =>
+    getTopicBySlug(this.partSlug(), this.topicSlug()),
+  );
+
+  protected readonly topicIndex = computed(() => {
+    const currentPart = this.part();
+    const currentTopic = this.topic();
+    if (!currentPart || !currentTopic) {
+      return -1;
+    }
+    return currentPart.topics.findIndex((item) => item.slug === currentTopic.slug);
+  });
+
+  protected readonly previousTopic = computed(() => {
+    const currentPart = this.part();
+    const index = this.topicIndex();
+    if (!currentPart || index <= 0) {
+      return null;
+    }
+    return currentPart.topics[index - 1];
+  });
+
+  protected readonly nextTopic = computed(() => {
+    const currentPart = this.part();
+    const index = this.topicIndex();
+    if (!currentPart || index < 0 || index >= currentPart.topics.length - 1) {
+      return null;
+    }
+    return currentPart.topics[index + 1];
+  });
+
+  private inferPartSlugFromUrl(): string {
+    const url = this.route.snapshot.url.map((segment) => segment.path).join('/');
+    if (url.startsWith('foundations')) return 'foundations';
+    if (url.startsWith('sandbox')) return 'sandbox';
+    if (url.startsWith('projects')) return 'projects';
+    return '';
+  }
+}

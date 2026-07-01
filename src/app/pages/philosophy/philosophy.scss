@@ -1,0 +1,43 @@
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+.body-text {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+}
+
+.doc-framework {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.doc-framework h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+}
+
+.doc-framework > p {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+}
+
+.framework-item {
+  padding: 0.875rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--color-accent-strong);
+  background: var(--color-accent-soft);
+  border: 1px solid rgba(42, 111, 151, 0.12);
+  border-radius: var(--radius-md);
+}

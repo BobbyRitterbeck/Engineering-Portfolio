@@ -1,0 +1,58 @@
+@if (part(); as currentPart) {
+  <div class="page">
+    <app-section-header
+      [eyebrow]="'Part ' + currentPart.partNumber"
+      [title]="currentPart.title"
+      [subtitle]="currentPart.subtitle"
+    />
+
+    @for (paragraph of currentPart.intro; track paragraph) {
+      <p class="body-text">{{ paragraph }}</p>
+    }
+
+    <section class="topics-section">
+      <h2>
+        @if (currentPart.partNumber === 1) {
+          Foundation Topics
+        } @else if (currentPart.partNumber === 2) {
+          Sandbox Applications
+        } @else {
+          Intern Projects
+        }
+      </h2>
+      <div class="topic-grid">
+        @for (topic of currentPart.topics; track topic.slug) {
+          <app-topic-card
+            [title]="topic.title"
+            [subtitle]="topic.subtitle"
+            [summary]="topic.summary"
+            [link]="'/' + currentPart.slug + '/' + topic.slug"
+            [tags]="topic.tags ?? []"
+          />
+        }
+      </div>
+    </section>
+
+    <nav class="part-nav">
+      @if (currentPart.partNumber > 1) {
+        @if (currentPart.partNumber === 2) {
+          <a routerLink="/foundations" class="part-nav__link">← Part I: Foundations</a>
+        } @else {
+          <a routerLink="/sandbox" class="part-nav__link">← Part II: Sandbox</a>
+        }
+      }
+      @if (currentPart.partNumber < 3) {
+        @if (currentPart.partNumber === 1) {
+          <a routerLink="/sandbox" class="part-nav__link part-nav__link--next">Part II: Sandbox →</a>
+        } @else {
+          <a routerLink="/projects" class="part-nav__link part-nav__link--next">Part III: Projects →</a>
+        }
+      }
+    </nav>
+  </div>
+} @else {
+  <div class="page">
+    <app-section-header title="Section not found" subtitle="The requested portfolio section could not be found." />
+    <a routerLink="/" class="inline-link">Return home →</a>
+  </div>
+}

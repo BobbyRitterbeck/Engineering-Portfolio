@@ -1,0 +1,46 @@
+.page {
+  max-width: calc(var(--content-max) + 4rem);
+  margin: 0 auto;
+}
+
+.body-text {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+}
+
+.topics-section {
+  margin-top: 3rem;
+}
+
+.topics-section h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.75rem;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.part-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.part-nav__link {
+  font-weight: 500;
+}
+
+.part-nav__link--next {
+  margin-left: auto;
+}
+
+.inline-link {
+  font-weight: 500;
+}

@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.main-content {
+  min-height: 100dvh;
+  margin-left: var(--sidebar-width);
+  padding: 3rem clamp(1.25rem, 4vw, 3rem) 4rem;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 0;
+    padding-top: 4.5rem;
+  }
+}

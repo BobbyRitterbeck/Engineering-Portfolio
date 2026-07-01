@@ -1,0 +1,20 @@
+<a class="topic-card" [routerLink]="link()">
+  <div class="topic-card__top">
+    @if (partLabel()) {
+      <span class="topic-card__label">{{ partLabel() }}</span>
+    }
+    <span class="topic-card__arrow" aria-hidden="true">→</span>
+  </div>
+  <h3>{{ title() }}</h3>
+  @if (subtitle()) {
+    <p class="topic-card__subtitle">{{ subtitle() }}</p>
+  }
+  <p class="topic-card__summary">{{ summary() }}</p>
+  @if (tags().length) {
+    <div class="topic-card__tags">
+      @for (tag of tags(); track tag) {
+        <span class="tag">{{ tag }}</span>
+      }
+    </div>
+  }
+</a>

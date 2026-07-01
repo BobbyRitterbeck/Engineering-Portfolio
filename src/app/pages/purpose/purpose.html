@@ -1,0 +1,19 @@
+<div class="page">
+  <app-section-header
+    eyebrow="Overview"
+    title="Purpose"
+    subtitle="This portfolio serves four main purposes that guide how each project is documented."
+  />
+
+  <div class="purpose-list">
+    @for (item of purposeItems; track item.title; let index = $index) {
+      <article class="purpose-item">
+        <span class="purpose-item__index">{{ (index + 1).toString().padStart(2, '0') }}</span>
+        <div>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+        </div>
+      </article>
+    }
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="page">
+  <section class="hero">
+    <p class="hero__eyebrow">Software Engineering & Architecture Internship</p>
+    <h1>{{ meta.title }}</h1>
+    <p class="hero__lead">{{ meta.tagline }}</p>
+    <div class="hero__actions">
+      <a routerLink="/philosophy" class="button button--primary">Read the philosophy</a>
+      <a routerLink="/foundations" class="button button--secondary">Explore foundations</a>
+    </div>
+  </section>
+
+  <section class="content-block">
+    <app-section-header
+      [title]="introduction.title"
+      subtitle="A permanent engineering notebook documenting technical growth."
+    />
+    @for (paragraph of introduction.paragraphs; track paragraph) {
+      <p class="lead-text">{{ paragraph }}</p>
+    }
+  </section>
+
+  <section class="content-block">
+    <div class="section-heading">
+      <h2>Purpose</h2>
+      <a routerLink="/purpose" class="inline-link">View full section →</a>
+    </div>
+    <div class="purpose-grid">
+      @for (item of purposeItems; track item.title) {
+        <article class="purpose-card">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="content-block">
+    <div class="section-heading">
+      <h2>Portfolio Structure</h2>
+      <p>Three parts moving from foundational learning to production-oriented engineering work.</p>
+    </div>
+    <div class="parts-grid">
+      @for (part of parts; track part.slug) {
+        <article class="part-card">
+          <span class="part-card__number">Part {{ part.partNumber }}</span>
+          <h3>{{ part.title }}</h3>
+          <p>{{ part.intro[0] }}</p>
+          <a [routerLink]="['/', part.slug]" class="inline-link">Explore part →</a>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="content-block">
+    <div class="section-heading">
+      <h2>Featured Work</h2>
+    </div>
+    <div class="topic-grid">
+      <app-topic-card
+        title="Keystroke Velocity Tracking"
+        summary="A reusable Angular feature for collecting keystroke timing metrics to support fraud detection and behavioral analysis."
+        link="/projects/keystroke-velocity-tracking"
+        partLabel="Intern Project"
+        [tags]="['Angular', 'Production', 'Fraud Detection']"
+      />
+      <app-topic-card
+        title="Loan Application Portal"
+        summary="A sandbox application simulating a real-world loan platform, built to practice professional engineering practices."
+        link="/sandbox/loan-application-portal"
+        partLabel="Sandbox Application"
+        [tags]="['Angular', 'Architecture', 'Mock APIs']"
+      />
+    </div>
+  </section>
+</div>

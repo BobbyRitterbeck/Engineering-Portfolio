@@ -1,0 +1,55 @@
+@if (topic(); as currentTopic) {
+  @if (part(); as currentPart) {
+    <div class="page">
+      <div class="topic-meta">
+        <a [routerLink]="['/', currentPart.slug]" class="breadcrumb">
+          Part {{ currentPart.partNumber }} · {{ currentPart.title }}
+        </a>
+        @if (currentTopic.tags?.length) {
+          <div class="tag-row">
+            @for (tag of currentTopic.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <app-section-header
+        [eyebrow]="currentTopic.subtitle ?? ('Part ' + currentPart.partNumber)"
+        [title]="currentTopic.title"
+        [subtitle]="currentTopic.summary"
+      />
+
+      <div class="content-panel">
+        <app-doc-content [sections]="currentTopic.sections" />
+      </div>
+
+      <nav class="topic-nav">
+        @if (previousTopic(); as previous) {
+          <a
+            [routerLink]="['/', currentPart.slug, previous.slug]"
+            class="topic-nav__link"
+          >
+            ← {{ previous.title }}
+          </a>
+        }
+        @if (nextTopic(); as next) {
+          <a
+            [routerLink]="['/', currentPart.slug, next.slug]"
+            class="topic-nav__link topic-nav__link--next"
+          >
+            {{ next.title }} →
+          </a>
+        }
+      </nav>
+    </div>
+  }
+} @else {
+  <div class="page">
+    <app-section-header
+      title="Topic not found"
+      subtitle="The requested portfolio topic could not be found."
+    />
+    <a routerLink="/" class="inline-link">Return home →</a>
+  </div>
+}

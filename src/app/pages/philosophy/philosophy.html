@@ -1,0 +1,23 @@
+<div class="page">
+  <app-section-header
+    eyebrow="Approach"
+    [title]="philosophy.title"
+    [subtitle]="philosophy.lead"
+  />
+
+  @for (paragraph of philosophy.paragraphs; track paragraph) {
+    <p class="body-text">{{ paragraph }}</p>
+  }
+
+  <section class="doc-framework">
+    <h2>Documentation Framework</h2>
+    <p>
+      Each significant project follows this engineering-focused structure whenever possible:
+    </p>
+    <div class="framework-grid">
+      @for (section of philosophy.docSections; track section) {
+        <div class="framework-item">{{ section }}</div>
+      }
+    </div>
+  </section>
+</div>

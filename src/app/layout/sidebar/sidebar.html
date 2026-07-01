@@ -1,0 +1,93 @@
+<button
+  type="button"
+  class="mobile-toggle"
+  (click)="toggleMobile()"
+  [attr.aria-expanded]="mobileOpen()"
+  aria-controls="portfolio-sidebar"
+>
+  <span class="mobile-toggle__bar"></span>
+  <span class="mobile-toggle__bar"></span>
+  <span class="mobile-toggle__label">{{ mobileOpen() ? 'Close' : 'Menu' }}</span>
+</button>
+
+<aside
+  id="portfolio-sidebar"
+  class="sidebar"
+  [class.sidebar--open]="mobileOpen()"
+>
+  <div class="sidebar__brand">
+    <a routerLink="/" (click)="closeMobile()" class="sidebar__brand-link">
+      <span class="sidebar__mark">SE</span>
+      <div>
+        <strong>Engineering Portfolio</strong>
+        <span>Best Egg Internship</span>
+      </div>
+    </a>
+  </div>
+
+  <nav class="sidebar__nav" aria-label="Portfolio navigation">
+    @for (item of navigation; track item.path) {
+      @if (item.children?.length) {
+        <div class="nav-group">
+          <div class="nav-group__header">
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: false }"
+              (click)="closeMobile()"
+              class="nav-link nav-link--parent"
+            >
+              {{ item.label }}
+            </a>
+            <button
+              type="button"
+              class="nav-group__toggle"
+              (click)="toggleSection(item, $event)"
+              [attr.aria-expanded]="isExpanded(item)"
+              [attr.aria-label]="'Toggle ' + item.label"
+            >
+              {{ isExpanded(item) ? '−' : '+' }}
+            </button>
+          </div>
+          @if (isExpanded(item)) {
+            <div class="nav-group__children">
+              @for (child of item.children; track child.path) {
+                <a
+                  [routerLink]="child.path"
+                  routerLinkActive="active"
+                  (click)="closeMobile()"
+                  class="nav-link nav-link--child"
+                >
+                  {{ child.label }}
+                </a>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          (click)="closeMobile()"
+          class="nav-link"
+        >
+          {{ item.label }}
+        </a>
+      }
+    }
+  </nav>
+
+  <div class="sidebar__footer">
+    <p>{{ meta.tagline }}</p>
+  </div>
+</aside>
+
+@if (mobileOpen()) {
+  <button
+    type="button"
+    class="sidebar-backdrop"
+    (click)="closeMobile()"
+    aria-label="Close navigation"
+  ></button>
+}
