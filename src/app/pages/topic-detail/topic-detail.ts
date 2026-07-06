@@ -2,18 +2,19 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { getPartBySlug, getTopicBySlug } from '../../data/portfolio.data';
-import { DocContent } from '../../shared/doc-content/doc-content';
-import { SectionHeader } from '../../shared/section-header/section-header';
+import { PortfolioContentService } from '../../core/services/portfolio-content.service';
+import { DocContentComponent } from '../../shared/doc-content/doc-content';
+import { SectionHeaderComponent } from '../../shared/section-header/section-header';
 
 @Component({
   selector: 'app-topic-detail',
-  imports: [SectionHeader, DocContent, RouterLink],
+  imports: [SectionHeaderComponent, DocContentComponent, RouterLink],
   templateUrl: './topic-detail.html',
   styleUrl: './topic-detail.scss',
 })
-export class TopicDetailPage {
+export class TopicDetailPageComponent {
   private readonly route = inject(ActivatedRoute);
+  private readonly portfolioContentService = inject(PortfolioContentService);
 
   private readonly routePartSlug = toSignal(
     this.route.data.pipe(map((data) => (data['partSlug'] as string) ?? '')),
@@ -26,16 +27,19 @@ export class TopicDetailPage {
   );
 
   protected readonly partSlug = computed(
+    // Topic routes can resolve part from route data or URL, depending on route shape.
     () =>
       this.routePartSlug() ||
       this.route.snapshot.paramMap.get('partSlug') ||
       this.inferPartSlugFromUrl(),
   );
 
-  protected readonly part = computed(() => getPartBySlug(this.partSlug()));
+  protected readonly part = computed(() =>
+    this.portfolioContentService.getPartBySlug(this.partSlug()),
+  );
 
   protected readonly topic = computed(() =>
-    getTopicBySlug(this.partSlug(), this.topicSlug()),
+    this.portfolioContentService.getTopicBySlug(this.partSlug(), this.topicSlug()),
   );
 
   protected readonly topicIndex = computed(() => {
@@ -66,6 +70,7 @@ export class TopicDetailPage {
   });
 
   private inferPartSlugFromUrl(): string {
+    // Defensive fallback for direct URL access.
     const url = this.route.snapshot.url.map((segment) => segment.path).join('/');
     if (url.startsWith('foundations')) return 'foundations';
     if (url.startsWith('sandbox')) return 'sandbox';

@@ -1,52 +1,56 @@
 import { Routes } from '@angular/router';
-import { AppShell } from './layout/app-shell/app-shell';
-import { HomePage } from './pages/home/home';
-import { PartOverviewPage } from './pages/part-overview/part-overview';
-import { PhilosophyPage } from './pages/philosophy/philosophy';
-import { PurposePage } from './pages/purpose/purpose';
-import { TopicDetailPage } from './pages/topic-detail/topic-detail';
+import { AppShellComponent } from './layout/app-shell/app-shell';
+import { HomePageComponent } from './pages/home/home';
+import { PartOverviewPageComponent } from './pages/part-overview/part-overview';
+import { PhilosophyPageComponent } from './pages/philosophy/philosophy';
+import { PurposePageComponent } from './pages/purpose/purpose';
+import { TopicDetailPageComponent } from './pages/topic-detail/topic-detail';
 
+/**
+ * Route data uses `partSlug` so feature pages can resolve content
+ * without hard-coding part names in component logic.
+ */
 export const routes: Routes = [
   {
     path: '',
-    component: AppShell,
+    component: AppShellComponent,
     children: [
-      { path: '', component: HomePage, title: 'Introduction' },
-      { path: 'purpose', component: PurposePage, title: 'Purpose' },
-      { path: 'philosophy', component: PhilosophyPage, title: 'Engineering Philosophy' },
+      { path: '', component: HomePageComponent, title: 'Introduction' },
+      { path: 'purpose', component: PurposePageComponent, title: 'Purpose' },
+      { path: 'philosophy', component: PhilosophyPageComponent, title: 'Engineering Philosophy' },
       {
         path: 'foundations',
-        component: PartOverviewPage,
+        component: PartOverviewPageComponent,
         title: 'Part I — Foundations',
         data: { partSlug: 'foundations' },
       },
       {
         path: 'sandbox',
-        component: PartOverviewPage,
+        component: PartOverviewPageComponent,
         title: 'Part II — Sandbox Applications',
         data: { partSlug: 'sandbox' },
       },
       {
         path: 'projects',
-        component: PartOverviewPage,
+        component: PartOverviewPageComponent,
         title: 'Part III — Intern Projects',
         data: { partSlug: 'projects' },
       },
       {
         path: 'foundations/:topicSlug',
-        component: TopicDetailPage,
+        component: TopicDetailPageComponent,
         title: 'Foundation Topic',
         data: { partSlug: 'foundations' },
       },
       {
         path: 'sandbox/:topicSlug',
-        component: TopicDetailPage,
+        component: TopicDetailPageComponent,
         title: 'Sandbox Application',
         data: { partSlug: 'sandbox' },
       },
       {
         path: 'projects/:topicSlug',
-        component: TopicDetailPage,
+        component: TopicDetailPageComponent,
         title: 'Intern Project',
         data: { partSlug: 'projects' },
       },

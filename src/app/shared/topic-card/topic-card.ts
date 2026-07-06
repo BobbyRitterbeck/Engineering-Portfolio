@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './topic-card.html',
   styleUrl: './topic-card.scss',
 })
-export class TopicCard {
+export class TopicCardComponent {
   readonly title = input.required<string>();
   readonly summary = input.required<string>();
   readonly link = input.required<string>();

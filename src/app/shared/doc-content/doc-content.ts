@@ -7,6 +7,6 @@ import { DocSection } from '../../models/portfolio.models';
   templateUrl: './doc-content.html',
   styleUrl: './doc-content.scss',
 })
-export class DocContent {
+export class DocContentComponent {
   readonly sections = input.required<DocSection[]>();
 }

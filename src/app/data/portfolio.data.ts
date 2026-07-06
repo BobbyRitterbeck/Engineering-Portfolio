@@ -1,12 +1,23 @@
-import { NavItem, PortfolioPart, PurposeItem } from '../models/portfolio.models';
+import {
+  EngineeringPhilosophy,
+  NavItem,
+  PortfolioIntroduction,
+  PortfolioMeta,
+  PortfolioPart,
+  PurposeItem,
+} from '../models/portfolio.models';
 
-export const PORTFOLIO_META = {
+/**
+ * Static content source for the portfolio.
+ * Components should consume this data through PortfolioContentService.
+ */
+export const PORTFOLIO_META: PortfolioMeta = {
   title: 'Software Engineering Portfolio',
   subtitle: 'Best Egg Internship · Software Engineering & Architecture',
   tagline: 'An engineering notebook documenting technical growth from foundations to production.',
 };
 
-export const INTRODUCTION = {
+export const INTRODUCTION: PortfolioIntroduction = {
   title: 'Introduction',
   paragraphs: [
     'This portfolio documents my progression throughout my Software Engineering & Architecture internship at Best Egg. Rather than serving as a collection of notes, it records how my understanding of software engineering evolved—from learning core web development fundamentals to designing software features intended for production use.',
@@ -37,25 +48,32 @@ export const PURPOSE_ITEMS: PurposeItem[] = [
   },
 ];
 
-export const ENGINEERING_PHILOSOPHY = {
+export const ENGINEERING_PHILOSOPHY: EngineeringPhilosophy = {
   title: 'Engineering Philosophy',
   lead: 'One lesson became clear very early in my internship: good software is more than working code.',
   paragraphs: [
     'I have observed that professional software engineering requires understanding why a solution exists, why it was designed a particular way, what tradeoffs were made, how maintainable it is, and how it fits into a larger system. That perspective shaped this portfolio.',
     'Each significant project follows an engineering-focused documentation style whenever possible. This structure is meant to mirror true software production rather than just completed code.',
   ],
-  docSections: [
-    'Problem Statement',
-    'Background',
-    'Requirements',
-    'Design Constraints',
-    'Research',
-    'Architecture',
-    'Development Process',
-    'Testing',
-    'Results',
-    'Reflection',
-    'Future Improvements',
+  docSectionGroups: [
+    {
+      label: 'Understand',
+      sections: [
+        'Problem Statement',
+        'Background',
+        'Requirements',
+        'Design Constraints',
+        'Research',
+      ],
+    },
+    {
+      label: 'Build',
+      sections: ['Architecture', 'Development Process', 'Testing'],
+    },
+    {
+      label: 'Evaluate',
+      sections: ['Results', 'Reflection', 'Future Improvements'],
+    },
   ],
 };
 
@@ -374,12 +392,3 @@ export const NAVIGATION: NavItem[] = [
     })),
   },
 ];
-
-export function getPartBySlug(slug: string): PortfolioPart | undefined {
-  return PORTFOLIO_PARTS.find((part) => part.slug === slug);
-}
-
-export function getTopicBySlug(partSlug: string, topicSlug: string) {
-  const part = getPartBySlug(partSlug);
-  return part?.topics.find((topic) => topic.slug === topicSlug);
-}

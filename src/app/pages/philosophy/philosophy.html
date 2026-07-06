@@ -14,9 +14,16 @@
     <p>
       Each significant project follows this engineering-focused structure whenever possible:
     </p>
-    <div class="framework-grid">
-      @for (section of philosophy.docSections; track section) {
-        <div class="framework-item">{{ section }}</div>
+    <div class="framework-groups">
+      @for (group of philosophy.docSectionGroups; track group.label) {
+        <div class="framework-group">
+          <h3>{{ group.label }}</h3>
+          <ol class="framework-list">
+            @for (section of group.sections; track section) {
+              <li>{{ section }}</li>
+            }
+          </ol>
+        </div>
       }
     </div>
   </section>

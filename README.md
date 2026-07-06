@@ -2,6 +2,10 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
 
+## Project docs
+
+- Architecture and responsibilities: `docs/ARCHITECTURE.md`
+
 ## Development server
 
 To start a local development server, run:

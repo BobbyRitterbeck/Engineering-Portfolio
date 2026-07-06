@@ -1,23 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-  INTRODUCTION,
-  PORTFOLIO_META,
-  PORTFOLIO_PARTS,
-  PURPOSE_ITEMS,
-} from '../../data/portfolio.data';
-import { SectionHeader } from '../../shared/section-header/section-header';
-import { TopicCard } from '../../shared/topic-card/topic-card';
+import { PortfolioContentService } from '../../core/services/portfolio-content.service';
+import { SectionHeaderComponent } from '../../shared/section-header/section-header';
+import { TopicCardComponent } from '../../shared/topic-card/topic-card';
 
 @Component({
   selector: 'app-home',
-  imports: [SectionHeader, TopicCard, RouterLink],
+  imports: [SectionHeaderComponent, TopicCardComponent, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class HomePage {
-  protected readonly meta = PORTFOLIO_META;
-  protected readonly introduction = INTRODUCTION;
-  protected readonly purposeItems = PURPOSE_ITEMS;
-  protected readonly parts = PORTFOLIO_PARTS;
+export class HomePageComponent {
+  private readonly portfolioContentService = inject(PortfolioContentService);
+
+  protected readonly meta = this.portfolioContentService.getMeta();
+  protected readonly introduction = this.portfolioContentService.getIntroduction();
+  protected readonly purposeItems = this.portfolioContentService.getPurposeItems();
+  protected readonly parts = this.portfolioContentService.getParts();
 }

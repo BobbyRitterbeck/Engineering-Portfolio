@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
-import { ENGINEERING_PHILOSOPHY } from '../../data/portfolio.data';
-import { SectionHeader } from '../../shared/section-header/section-header';
+import { Component, inject } from '@angular/core';
+import { PortfolioContentService } from '../../core/services/portfolio-content.service';
+import { SectionHeaderComponent } from '../../shared/section-header/section-header';
 
 @Component({
   selector: 'app-philosophy',
-  imports: [SectionHeader],
+  imports: [SectionHeaderComponent],
   templateUrl: './philosophy.html',
   styleUrl: './philosophy.scss',
 })
-export class PhilosophyPage {
-  protected readonly philosophy = ENGINEERING_PHILOSOPHY;
+export class PhilosophyPageComponent {
+  private readonly portfolioContentService = inject(PortfolioContentService);
+
+  protected readonly philosophy = this.portfolioContentService.getPhilosophy();
 }

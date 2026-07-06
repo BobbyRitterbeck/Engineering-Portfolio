@@ -6,7 +6,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './section-header.html',
   styleUrl: './section-header.scss',
 })
-export class SectionHeader {
+export class SectionHeaderComponent {
   readonly eyebrow = input<string>();
   readonly title = input.required<string>();
   readonly subtitle = input<string>();

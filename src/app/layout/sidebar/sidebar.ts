@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NAVIGATION, PORTFOLIO_META } from '../../data/portfolio.data';
+import { PortfolioContentService } from '../../core/services/portfolio-content.service';
 import { NavItem } from '../../models/portfolio.models';
 
 @Component({
@@ -9,9 +9,11 @@ import { NavItem } from '../../models/portfolio.models';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
-export class Sidebar {
-  protected readonly meta = PORTFOLIO_META;
-  protected readonly navigation = NAVIGATION;
+export class SidebarComponent {
+  private readonly portfolioContentService = inject(PortfolioContentService);
+
+  protected readonly meta = this.portfolioContentService.getMeta();
+  protected readonly navigation = this.portfolioContentService.getNavigation();
   protected readonly mobileOpen = signal(false);
   protected readonly expandedSections = signal<Record<string, boolean>>({
     '/foundations': true,
@@ -28,6 +30,7 @@ export class Sidebar {
   }
 
   toggleSection(item: NavItem, event: Event): void {
+    // Prevents parent navigation click while toggling section visibility.
     event.preventDefault();
     event.stopPropagation();
     this.expandedSections.update((sections) => ({

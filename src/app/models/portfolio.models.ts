@@ -4,9 +4,32 @@ export interface NavItem {
   children?: NavItem[];
 }
 
+export interface PortfolioMeta {
+  title: string;
+  subtitle: string;
+  tagline: string;
+}
+
+export interface PortfolioIntroduction {
+  title: string;
+  paragraphs: string[];
+}
+
 export interface PurposeItem {
   title: string;
   description: string;
+}
+
+export interface DocumentationSectionGroup {
+  label: string;
+  sections: string[];
+}
+
+export interface EngineeringPhilosophy {
+  title: string;
+  lead: string;
+  paragraphs: string[];
+  docSectionGroups: DocumentationSectionGroup[];
 }
 
 export interface DocSection {
