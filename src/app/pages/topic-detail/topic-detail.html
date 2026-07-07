@@ -20,8 +20,38 @@
         [subtitle]="currentTopic.summary"
       />
 
+      @if (hasMainGuideStructure()) {
+        <section class="project-guide" aria-label="Project guide">
+          <h2>Project At A Glance</h2>
+          <p class="project-guide__summary">{{ projectBrief() }}</p>
+
+          <div class="project-guide__groups">
+            @for (group of guideGroups(); track group.name) {
+              <article class="project-guide__group">
+                <h3>{{ group.name }}</h3>
+                <div class="project-guide__links">
+                  @for (section of group.sections; track section.index) {
+                    <button
+                      type="button"
+                      class="project-guide__link"
+                      (click)="scrollToSection(section.originalTitle, section.index)"
+                    >
+                      {{ section.label }}
+                    </button>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+
       <div class="content-panel">
-        <app-doc-content [sections]="currentTopic.sections" />
+        <h2 class="content-panel__heading">Full Documentation</h2>
+        <app-doc-content
+          [sections]="currentTopic.sections"
+          [showToc]="!hasMainGuideStructure()"
+        />
       </div>
 
       <nav class="topic-nav">

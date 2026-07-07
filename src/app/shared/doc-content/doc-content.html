@@ -1,5 +1,22 @@
-@for (section of sections(); track section.title) {
-  <section class="doc-section">
+@if (showToc() && sections().length > 1) {
+  <nav class="doc-toc" aria-label="Section navigation">
+    <p class="doc-toc__label">Jump to section</p>
+    <div class="doc-toc__links">
+      @for (section of sections(); track section.title; let index = $index) {
+        <button
+          type="button"
+          class="doc-toc__link"
+          (click)="scrollToSection(section.title, index)"
+        >
+          {{ section.title }}
+        </button>
+      }
+    </div>
+  </nav>
+}
+
+@for (section of sections(); track section.title; let index = $index) {
+  <section class="doc-section" [id]="sectionId(section.title, index)">
     <h2>{{ section.title }}</h2>
     @for (paragraph of section.paragraphs; track paragraph) {
       <p>{{ paragraph }}</p>
