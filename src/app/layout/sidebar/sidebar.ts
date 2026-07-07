@@ -15,11 +15,7 @@ export class SidebarComponent {
   protected readonly meta = this.portfolioContentService.getMeta();
   protected readonly navigation = this.portfolioContentService.getNavigation();
   protected readonly mobileOpen = signal(false);
-  protected readonly expandedSections = signal<Record<string, boolean>>({
-    '/foundations': true,
-    '/sandbox': true,
-    '/projects': true,
-  });
+  protected readonly expandedSections = signal<Record<string, boolean>>({});
 
   toggleMobile(): void {
     this.mobileOpen.update((open) => !open);
